@@ -1,9 +1,14 @@
 import { createStore } from 'vuex'
-const state = function () {
-	return {
-		a: 1
+const state = {
+	todoList: []
+}
+const mutations = {
+	addTodo(state, todo) {
+		console.log(23)
+		state.todoList.push(todo)
 	}
 }
 export default createStore({
-	state
+	state,
+	mutations
 })
