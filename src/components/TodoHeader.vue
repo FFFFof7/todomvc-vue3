@@ -21,8 +21,8 @@ export default {
     const addTodo = () => {
       let value = todo.value.trim();
       if (!value) return;
-      store.dispatch("addTodo", value);
-      console.log(store)
+      store.commit("addTodo", value);
+      todo.value = "";
     };
     return {
       todo,

@@ -1,10 +1,9 @@
 import { createStore } from 'vuex'
 const state = {
-	todoList: []
+	todoList: ['123']
 }
 const mutations = {
 	addTodo(state, todo) {
-		console.log(23)
 		state.todoList.push(todo)
 	}
 }
