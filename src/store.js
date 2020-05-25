@@ -12,6 +12,9 @@ const mutations = {
 	},
 	toggleTodo(state, index) {
 		state.todoList[index].isCompleted = !state.todoList[index].isCompleted
+	},
+	delTodo(state, index) {
+		state.todoList.splice(index, 1)
 	}
 }
 export default createStore({

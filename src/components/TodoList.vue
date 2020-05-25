@@ -13,7 +13,7 @@
         <div class="view">
           <input class="toggle" type="checkbox" @change="toggleTodo(index)" />
           <label>{{item.value}}</label>
-          <button class="destroy"></button>
+          <button class="destroy" @click="delTodo(index)"></button>
         </div>
         <input class="edit" type="text" />
       </li>
@@ -30,9 +30,13 @@ export default {
     const toggleTodo = index => {
       store.commit("toggleTodo", index);
     };
+    const delTodo = index => {
+      store.commit('delTodo', index)
+    };
     return {
       todoList,
-      toggleTodo
+      toggleTodo,
+      delTodo
     };
   }
 };
