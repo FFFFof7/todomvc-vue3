@@ -13,7 +13,7 @@
         >{{key}}</a>
       </li>
     </ul>
-    <button class="clear-completed">Clear completed</button>
+    <button class="clear-completed" @click="clearCompleted">Clear completed</button>
   </footer>
 </template>
 <script>
@@ -26,13 +26,17 @@ export default {
     const filterMode = computed(() => store.state.filterMode);
     const filtersKey = ["all", "active", "completed"];
     const checkoutMode = key => {
-      store.commit("checkOutFilterMode", key);
+      store.commit("checkoutFilterMode", key);
+    };
+    const clearCompleted = () => {
+      store.commit("clearCompleted");
     };
     return {
       todoNums,
       filtersKey,
       filterMode,
-      checkoutMode
+      checkoutMode,
+      clearCompleted
     };
   }
 };

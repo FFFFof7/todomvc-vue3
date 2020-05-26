@@ -1,12 +1,12 @@
 <template>
   <section class="main">
-    <input id="toggle-all" class="toggle-all" type="checkbox" />
+    <input id="toggle-all" class="toggle-all" @change="toggleAll" type="checkbox" />
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
       <li
         class="todo"
         :class="{completed: item.isCompleted, editing: item.editing}"
-        v-for="(item, index) in filterData"
+        v-for="(item, index) in filterTodo"
         :key="index"
       >
         <div class="view">
@@ -78,11 +78,11 @@ export default {
     const store = useStore();
     const todoList = computed(() => store.state.todoList);
     const filterMode = computed(() => store.state.filterMode);
-    const filterData = ref([]);
+    const filterTodo = ref([]);
     watch(
       [todoList, filterMode],
       ([todoList, filterMode]) => {
-        filterData.value = filters[filterMode](todoList);
+        filterTodo.value = filters[filterMode](todoList);
       },
       {
         deep: true,
@@ -108,18 +108,22 @@ export default {
         store.commit("delTodo", index);
       }
     };
-
     const editCancel = item => {
       item.ipt.value = item.value;
       item.editing = false;
     };
+    const toggleAll = () => {
+      const allChecked = filterTodo.value.every(item => item.isCompleted);
+      store.commit("toggleAll", allChecked);
+    };
     return {
-      filterData,
+      filterTodo,
       toggleTodo,
       delTodo,
       doneEdit,
       showIpt,
-      editCancel
+      editCancel,
+      toggleAll
     };
   }
 };

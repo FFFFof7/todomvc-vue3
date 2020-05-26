@@ -20,8 +20,16 @@ const mutations = {
 	editTodo(state, { value, index }) {
 		state.todoList[index] = Object.assign(state.todoList[index], { value })
 	},
-	checkOutFilterMode(state, mode) {
+	checkoutFilterMode(state, mode) {
 		state.filterMode = mode
+	},
+	toggleAll(state, allcheck) {
+		state.todoList = state.todoList.map(item => {
+			return Object.assign(item, { isCompleted: !allcheck })
+		})
+	},
+	clearCompleted(state) {
+		state.todoList = state.todoList.filter(item => !item.isCompleted)
 	}
 }
 const getters = {
