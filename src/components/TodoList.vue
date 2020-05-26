@@ -10,7 +10,12 @@
         :key="index"
       >
         <div class="view">
-          <input class="toggle" type="checkbox" @change="toggleTodo(index)" />
+          <input
+            class="toggle"
+            type="checkbox"
+            :checked="item.isCompleted"
+            @change="toggleTodo(index)"
+          />
           <label @dblclick="showIpt(item)">{{item.value}}</label>
           <button class="destroy" @click="delTodo(index)"></button>
         </div>
@@ -20,6 +25,8 @@
           :ref="el => item.ipt = el"
           :value="item.value"
           @blur="doneEdit(item, index)"
+          @keydown.enter="doneEdit(item, index)"
+          @keydown.esc="editCancel(item, index)"
         />
       </li>
     </ul>
@@ -37,17 +44,45 @@ const filters = {
         ...item
       };
     });
+  },
+  active: todoList => {
+    const list = [];
+    todoList.forEach(item => {
+      // console.log(item)
+      if (!item.isCompleted) {
+        list.push({
+          editing: false,
+          ipt: "",
+          ...item
+        });
+      }
+    });
+    return list;
+  },
+  completed: todoList => {
+    const list = [];
+    todoList.forEach(item => {
+      if (item.isCompleted) {
+        list.push({
+          editing: false,
+          ipt: "",
+          ...item
+        });
+      }
+    });
+    return list;
   }
 };
 export default {
   setup() {
     const store = useStore();
     const todoList = computed(() => store.state.todoList);
+    const filterMode = computed(() => store.state.filterMode);
     const filterData = ref([]);
     watch(
-      todoList,
-      todoList => {
-        filterData.value = filters["all"](todoList);
+      [todoList, filterMode],
+      ([todoList, filterMode]) => {
+        filterData.value = filters[filterMode](todoList);
       },
       {
         deep: true,
@@ -73,12 +108,18 @@ export default {
         store.commit("delTodo", index);
       }
     };
+
+    const editCancel = item => {
+      item.ipt.value = item.value;
+      item.editing = false;
+    };
     return {
       filterData,
       toggleTodo,
       delTodo,
       doneEdit,
-      showIpt
+      showIpt,
+      editCancel
     };
   }
 };

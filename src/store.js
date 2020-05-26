@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 const state = {
-	todoList: []
+	todoList: [],
+	filterMode: 'all'
 }
 const mutations = {
 	addTodo(state, todo) {
@@ -18,9 +19,18 @@ const mutations = {
 	},
 	editTodo(state, { value, index }) {
 		state.todoList[index] = Object.assign(state.todoList[index], { value })
+	},
+	checkOutFilterMode(state, mode) {
+		state.filterMode = mode
+	}
+}
+const getters = {
+	todoNums(state) {
+		return state.todoList.length
 	}
 }
 export default createStore({
 	state,
-	mutations
+	mutations,
+	getters
 })

@@ -5,7 +5,6 @@
       <todo-list></todo-list>
       <todo-fifters></todo-fifters>
     </section>
-    <todo-footer></todo-footer>
   </div>
 </template>
 
@@ -13,14 +12,12 @@
 import "../node_modules/todomvc-common/base.css";
 import "../node_modules/todomvc-app-css/index.css";
 import TodoHeader from "./components/TodoHeader";
-import TodoFooter from "./components/TodoFooter";
 import TodoList from "./components/TodoList";
 import TodoFifters from './components/TodoFifters'
 export default {
   name: "todomvc",
   components: {
     TodoHeader,
-    TodoFooter,
     TodoList,
     TodoFifters
   }
