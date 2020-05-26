@@ -15,6 +15,9 @@ const mutations = {
 	},
 	delTodo(state, index) {
 		state.todoList.splice(index, 1)
+	},
+	editTodo(state, { value, index }) {
+		state.todoList[index] = Object.assign(state.todoList[index], { value })
 	}
 }
 export default createStore({
